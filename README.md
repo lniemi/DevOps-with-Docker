@@ -20,7 +20,7 @@
 
 ## Exercise 1.4: Missing dependencies
 
-**output**
+**output**  
 smart solution:
 ![Exercise 1.4](exercises/1.4.png)
 
