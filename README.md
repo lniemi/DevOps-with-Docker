@@ -24,6 +24,9 @@
 smart solution:
 ![Exercise 1.4](exercises/1.4.png)
 
-`docker run -it -e WEBSITE=helsinki.fi ubuntu /bin/bash -c 'apt-get update && apt-get install curl -y && echo "Searching.." && sleep 1 && curl http://$WEBSITE'`  
+```markdown
+docker run -it -e WEBSITE=helsinki.fi ubuntu /bin/bash -c 'apt-get update && apt-get install curl -y && echo "Searching.." && sleep 1 && curl http://$WEBSITE'
+```
+
 output:  
 ![Exercise 1.4](<exercises/1.4(2).png>)
