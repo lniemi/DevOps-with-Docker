@@ -21,20 +21,9 @@
 ## Exercise 1.4: Missing dependencies
 
 **output**
-
-command:
-![Exercise 1.4](exercises/1.4.png)
-
-## Exercise 1.4: Missing dependencies
-
-**output**
-
 smart solution:
 ![Exercise 1.4](exercises/1.4.png)
 
-```bash
-docker run -it -e WEBSITE=helsinki.fi ubuntu /bin/bash -c 'apt-get update && apt-get install curl -y && echo "Searching.." && sleep 1 && curl http://$WEBSITE'
-```
-
-output:  
+`docker run -it -e WEBSITE=helsinki.fi ubuntu /bin/bash -c 'apt-get update && apt-get install curl -y && echo "Searching.." && sleep 1 && curl http://$WEBSITE'`  
+output:
 ![Exercise 1.4](<exercises/1.4(2).png>)
