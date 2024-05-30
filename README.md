@@ -201,3 +201,59 @@ RUN go build
 
 CMD ["./server"]
 ```
+
+## Exercise 1.14: Environment
+
+**output**
+
+Dockerfile (fronetend):
+
+```markdownFROM node:16-alpine
+
+EXPOSE 5000
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+RUN npm install
+
+RUN npm run build
+
+RUN npm install -g serve
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+```
+
+Dockerfile (backend):
+
+```markdown
+FROM ubuntu:latest
+
+COPY . .
+
+RUN apt-get update && apt-get install -y wget gcc && rm -rf /usr/local/go && wget -c https://golang.org/dl/go1.16.3.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.16.3.linux-amd64.tar.gz
+
+ENV PATH /usr/local/go/bin:$PATH
+
+ENV REQUEST_ORIGIN http://localhost:5000
+
+RUN go build
+
+RUN go test
+
+CMD ./server
+
+EXPOSE 8080
+```
+
+Shell:
+```markdown
+docker build . -t example-backend
+docker run -d -p 8080:8080 example-backend
+
+docker build . -t example-frontend
+docker run -d -p 5000:5000 example-frontend
+```
