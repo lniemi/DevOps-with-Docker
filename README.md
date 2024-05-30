@@ -181,3 +181,23 @@ RUN npm install -g serve
 
 CMD ["serve", "-s", "-l", "5000", "build"]
 ```
+
+## Exercise 1.13: Hello, backend!
+
+**output**
+
+Dockerfile:
+
+```markdown
+FROM golang:1.16-alpine
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN go build
+
+CMD ["./server"]
+```
