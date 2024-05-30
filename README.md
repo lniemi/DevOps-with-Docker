@@ -60,3 +60,9 @@ tail -f ./text.log
 
 output:
 ![Exercise 1.5](<exercises/1.5(2).png>)
+
+## Exercise 1.6: Hello Docker Hub
+
+**output**
+
+![Exercise 1.6](exercises/1.6.png)
