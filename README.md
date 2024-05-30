@@ -128,3 +128,32 @@ Command:
 ```markdown
 docker run -p 127.0.0.1:8080:8080 devopsdockeruh/simple-web-service
 ```
+
+## Exercise 1.11: Spring
+
+**output**
+
+Dockerfile:
+
+```markdown
+# Use Amazon Corretto for Java support
+FROM amazoncorretto:21.0.3-al2023-headless
+
+# Install Maven
+RUN yum install -y maven
+
+# Create app directory in container
+WORKDIR /app
+
+# Copy the project files into the container
+COPY . .
+
+# Build the application using Maven
+RUN mvn clean install
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Run the application
+CMD ["java", "-jar", "target/my-spring-app-0.0.1-SNAPSHOT.jar"]
+```
