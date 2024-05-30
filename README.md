@@ -4,32 +4,32 @@
 
 **output**
 
-![Exercise 1.1](exercises/1.1.png)
+![Exercise 1.1](1.1-1.6//1.1.png)
 
 ## Exercise 1.2: Hello, Docker Hub
 
 **output**
 
-![Exercise 1.2](exercises/1.2.png)
+![Exercise 1.2](1.1-1.6//1.2.png)
 
 ## Exercise 1.3: Secret message
 
 **output**
 
-![Exercise 1.3](exercises/1.3.png)
+![Exercise 1.3](1.1-1.6//1.3.png)
 
 ## Exercise 1.4: Missing dependencies
 
 **output**  
 smart solution:
-![Exercise 1.4](exercises/1.4.png)
+![Exercise 1.4](1.1-1.6//1.4.png)
 
 ```markdown
 docker run -it -e WEBSITE=helsinki.fi ubuntu /bin/bash -c 'apt-get update && apt-get install curl -y && echo "Searching.." && sleep 1 && curl http://$WEBSITE'
 ```
 
 output:  
-![Exercise 1.4](<exercises/1.4(2).png>)
+![Exercise 1.4](<1.1-1.6//1.4(2).png>)
 
 ## Exercise 1.5: Sizes of images
 
@@ -48,7 +48,7 @@ docker image ls
 ```
 
 output:
-![Exercise 1.5](exercises/1.5.png)
+![Exercise 1.5](1.1-1.6//1.5.png)
 ¨
 running the alpine image and finding the secret message:
 
@@ -59,10 +59,35 @@ tail -f ./text.log
 ```
 
 output:
-![Exercise 1.5](<exercises/1.5(2).png>)
+![Exercise 1.5](<1.1-1.6//1.5(2).png>)
 
 ## Exercise 1.6: Hello Docker Hub
 
 **output**
 
-![Exercise 1.6](exercises/1.6.png)
+![Exercise 1.6](1.1-1.6//1.6.png)
+
+## Exercise 1.7: Image for script
+
+**output**
+
+Dockerfile:
+
+```markdown
+FROM ubuntu:22.04
+
+# Install curl
+RUN apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Add the script file to the container
+COPY script.sh /script.sh
+
+# Give execution rights on the script
+RUN chmod +x /script.sh
+
+# Command to run on container start
+CMD ["/script.sh"]
+
+
