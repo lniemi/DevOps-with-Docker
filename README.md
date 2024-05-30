@@ -157,3 +157,27 @@ EXPOSE 8080
 # Run the application
 CMD ["java", "-jar", "target/my-spring-app-0.0.1-SNAPSHOT.jar"]
 ```
+
+## Exercise 1.12: Hello, frontend!
+
+**output**
+
+Dockerfile:
+
+```markdown
+FROM node:16-alpine
+
+EXPOSE 5000
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN npm install
+
+RUN npm run build
+
+RUN npm install -g serve
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+```
