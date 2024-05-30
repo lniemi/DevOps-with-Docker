@@ -118,3 +118,13 @@ Command:
 ```markdown
 touch text.log  && docker run -v "$(pwd)/text.log:/usr/src/app/text.log" devopsdockeruh/simple-web-service
 ```
+
+## Exercise 1.10: Ports open
+
+**output**
+
+Command:
+
+```markdown
+docker run -p 127.0.0.1:8080:8080 devopsdockeruh/simple-web-service
+```
