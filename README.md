@@ -89,5 +89,22 @@ RUN chmod +x /script.sh
 
 # Command to run on container start
 CMD ["/script.sh"]
+```
 
+## Exercise 1.8: Two line Dockerfile
 
+**output**
+
+Dockerfile:
+
+```markdown
+FROM devopsdockeruh/simple-web-service:alpine
+
+# Set default argument to the ENTRYPOINT
+CMD ["server"]
+```
+command running the container:
+
+```markdown
+docker run web-server
+```
