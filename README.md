@@ -277,3 +277,8 @@ To run this application, execute the following command:
 ```bash
 docker run lniemi/dystopiamath
 ```
+it will print 2 + 2 = 5
+
+## Exercise 1.16: Cloud deployment
+
+Skipped this exercise because it is allowed to skip one exercise. Also I am running out of free cloud environments with different cloud providers :D
