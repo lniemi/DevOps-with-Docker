@@ -31,3 +31,33 @@ services:
       - 8080:8080
     command: docker run -d simple-web-service server
 ```
+
+## Exercise 2.3
+
+**output**
+
+docker-compose.yml:
+```yaml
+version: '3.8'
+
+services:
+
+  backend:
+    image: devopsdockeruh/example-backend
+    build:
+      context: ./example-backend
+      dockerfile: Dockerfile
+    container_name: back
+    ports:
+      - 8080:8080
+
+  frontend:
+    image: example-frontend
+    build:
+      context: ./example-frontend
+      dockerfile: Dockerfile
+    container_name: front
+    ports:
+      - 5000:5000
+```
+This worked when copied the repos 1.13 and 1.14 to the same directory as the docker-compose.yml file.
