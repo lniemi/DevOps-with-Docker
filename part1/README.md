@@ -1,4 +1,4 @@
-# DevOps with Docker
+# DevOps with Docker part 1
 
 ## Exercise 1.1: Getting started
 
