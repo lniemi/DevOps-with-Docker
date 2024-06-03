@@ -100,3 +100,12 @@ services:
     image: redis
     container_name: redis
 ```
+
+## Exercise 2.5
+
+**output**
+
+command:
+```bash
+docker-compose up --scale compute=3
+```
