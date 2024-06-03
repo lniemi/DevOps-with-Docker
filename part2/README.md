@@ -292,3 +292,108 @@ volumes:
   hostDB:
     name: hostDB
 ```
+
+## Exercise 2.9
+
+**output** 
+
+docker-compose.yml:
+```yaml
+version: "3.8"
+
+services:
+
+  backend:
+    build:
+      context: ./example-backend
+      dockerfile: Dockerfile
+    environment:
+      REDIS_HOST: redis
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      REQUEST_ORIGIN: http://localhost
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    container_name: example-backend
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    command: redis-server --loglevel warning
+
+  frontend:
+    container_name: example-frontend
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend/api
+    build:
+      context: ./example-frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5000:5000"
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres
+    volumes:
+      - ./hostDB:/var/lib/postgresql/data
+    restart: unless-stopped
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - "5432:5432"
+
+  nginx:
+    container_name: reverse_proxy_nginx
+    tty: true
+    stdin_open: true
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - frontend
+
+volumes:
+  hostDB:
+    name: hostDB
+  nginx.conf:
+```
+
+nginx.conf:
+```conf
+events { worker_connections 1024; }
+
+http {
+  server {
+    listen 80;
+
+    location / {
+      proxy_set_header Host $host;
+      proxy_pass http://frontend:5000/;
+    }
+
+    location /api/ {
+      proxy_set_header Host $host;
+      proxy_pass http://backend:8080/;
+    }
+  }
+}
+```
+
+This one took lot longer than I thought. However I did not need to make changes to dockerfiles. They are same as before and can be found in the backend and frontend directories. Biggest aha moment happenened when I changed REQUEST_ORIGIN: http://localhost:80 to REQUEST_ORIGIN: http://localhost. This was the only change I needed to make everything work.
