@@ -109,3 +109,57 @@ command:
 ```bash
 docker-compose up --scale compute=3
 ```
+## Exercise 2.6
+
+**output**
+
+docker-compose.yml:
+```yaml
+version: '3.8'
+
+services:
+  backend:
+    image: example-backend
+    build:
+      context: ./example-backend
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - postgres
+    container_name: back
+
+  frontend:
+    image: example-frontend
+    build:
+      context: ./example-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend
+    container_name: front
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    restart: unless-stopped
+    container_name: postgres
+```
