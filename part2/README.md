@@ -224,3 +224,71 @@ volumes:
     name: hostDB
 
 ```
+## Exercise 2.8
+
+**output**
+
+docker-compose.yml:
+```yaml
+version: "3.8"
+
+services:
+
+  backend:
+    build:
+      context: ./example-backend
+      dockerfile: Dockerfile
+    environment:
+      REDIS_HOST: redis
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    container_name: example-backend
+
+  frontend:
+    container_name: example-frontend
+    build:
+      context: ./example-frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5000:5000"
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres
+    volumes:
+      - ./hostDB:/var/lib/postgresql/data
+    restart: unless-stopped
+    container_name: postgres
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+
+volumes:
+  hostDB:
+    name: hostDB
+```
