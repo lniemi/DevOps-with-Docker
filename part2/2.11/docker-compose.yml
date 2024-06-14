@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # PostgreSQL with PostGIS
+  db:
+    image: postgis/postgis
+    container_name: postgis
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./Volumes/pgdatabase:/var/lib/postgresql/data
+
+  # pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.admin" # Change to your preferred admin email
+      PGADMIN_DEFAULT_PASSWORD: "admin" # Change to your preferred admin password
+    ports:
+      - "5050:80" # Exposes pgAdmin on localhost:5050
+    depends_on:
+      - db
+    volumes:
+      - ./Volumes/pgadmin:/var/lib/pgadmin # Persists pgAdmin data across restarts
+
+  #frontend:
+  #  build:
+  #    context: ./frontend
+  #    dockerfile: Dockerfile
+  #  volumes:
+  #    - ./frontend:/app/frontend
+  #  ports:
+  #    - "5173:5173"
+  #  depends_on:
+  #    - backend
+
+  # Django with GeoDjango
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    #  # QGIS Server ## NOT IMPLEMENTED YET
+    #  qgis-server:
+    #    image: camptocamp/qgis-server
+    #    container_name: qgis-server
+    #    environment:
+    #      QGIS_SERVER_LOG_LEVEL: 0 # Lower log level for production
+    #      PGSERVICEFILE: /etc/qgisserver/psql_service.conf
+    #    volumes:
+    #      - ./qgisserver:/etc/qgisserver:ro
+    #      - ./qgisprojects:/projects
+    #    ports:
+    #      - "8080:80"
+    #    depends_on:
+    #      - db
+
+volumes:
+  postgis_data:
+  pgadmin_data:
+    {}
+    #networks:
+    #  default:
+    #    external:
+    #      name: my-network

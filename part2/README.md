@@ -397,3 +397,11 @@ http {
 ```
 
 This one took lot longer than I thought. However I did not need to make changes to dockerfiles. They are same as before and can be found in the backend and frontend directories. Biggest aha moment happenened when I changed REQUEST_ORIGIN: http://localhost:80 to REQUEST_ORIGIN: http://localhost. This was the only change I needed to make everything work.
+
+## Exercise 2.10
+
+skipped this one
+
+## Exercise 2.11
+
+I decided to dockerize an app that I have been developing. Look [here](./2.11) for more details.

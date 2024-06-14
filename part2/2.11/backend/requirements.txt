@@ -1,0 +1,8 @@
+django
+tzdata
+psycopg2-binary
+djangorestframework
+django-cors-headers
+django-filter
+djangorestframework-gis
+python-dateutil

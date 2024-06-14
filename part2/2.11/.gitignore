@@ -1,0 +1,10 @@
+.env
+todo.md
+Volumes/pgadmin/azurecredentialcache
+Volumes/pgadmin/sessions/
+Volumes/pgadmin/storage/
+Volumes/pgadmin/pgadmin4.db
+Volumes/pgdatabase/
+
+.$notes.drawio.dtmp
+notes.drawio
