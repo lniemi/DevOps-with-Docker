@@ -1,0 +1,1 @@
+![certificate-docker2024.png](certificate-docker2024.png)
